@@ -27,12 +27,7 @@ import com.github.sarxos.webcam.Webcam;
 public class ProgramBadFaceTrack {
 	
 	public static final int WIDTH = 1280, HEIGHT = 360;
-	public static int MAX_VALUE = 255;
-	public static int MAX_TYPE = 4;
-	public static int MAX_BINARY_VALUE = 255;
 	
-	public int thresholdValue = 128;
-	public int thresholdType = 0;
 	private Dimension a = new Dimension(320, 180);
 	private Mat src;
 	private Mat hsv_roi = new Mat();
