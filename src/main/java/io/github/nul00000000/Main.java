@@ -2,20 +2,23 @@ package io.github.nul00000000;
 
 import java.io.PrintStream;
 
-import io.github.nul00000000.program.ProgramInfiniteRecharge;
+import io.github.nul00000000.program.ProgramBadFaceTrack;
 
 public class Main {
 	
 	public static final byte INFINITE_RECHARGE = 0;
 	public static final byte TURTLE_STRAW_SCREAM = 1;
 	public static final byte FACE_FINDER = 2;
+	public static final byte BAD_FACE_TRACK = 3;
 	
 	private byte program;
 		
 	public Main(String[] args) {
+		System.load("C:/OpenCV-4.2.0/opencv/build/java/x64/opencv_java420.dll");
+//		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		if(args.length < 1) {
 			System.out.println("No program selected, defaulting to 0 (INFINITE_RECHARGE)");
-			program = INFINITE_RECHARGE;
+			program = BAD_FACE_TRACK;
 		} else if(args[0].equals("list")) {
 			this.printList(System.out);
 		} else {
@@ -28,7 +31,9 @@ public class Main {
 		}
 		switch(program) {
 		case INFINITE_RECHARGE:
-			new ProgramInfiniteRecharge().run();
+			break;
+		case BAD_FACE_TRACK:
+			new ProgramBadFaceTrack().run();
 			break;
 		default:
 			break;
