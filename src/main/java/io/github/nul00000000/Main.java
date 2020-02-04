@@ -17,6 +17,7 @@ import com.github.sarxos.webcam.Webcam;
 import io.github.nul00000000.program.Program;
 import io.github.nul00000000.program.ProgramBadFaceTrack;
 import io.github.nul00000000.program.ProgramFaceFinder;
+import io.github.nul00000000.program.ProgramInfiniteRecharge;
 
 public class Main {
 	
@@ -40,7 +41,7 @@ public class Main {
 //		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		if(args.length < 1) {
 			System.out.println("No program selected, defaulting to 0 (INFINITE_RECHARGE)");
-			programID = FACE_FINDER;
+			programID = INFINITE_RECHARGE;
 		} else if(args[0].equals("list")) {
 			this.printList(System.out);
 		} else {
@@ -71,6 +72,7 @@ public class Main {
 		
 		switch(programID) {
 		case INFINITE_RECHARGE:
+			program = new ProgramInfiniteRecharge();
 			break;
 		case FACE_FINDER:
 			program = new ProgramFaceFinder();
