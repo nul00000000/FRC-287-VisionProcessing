@@ -52,7 +52,7 @@ public class Main {
 				this.printList(System.err);
 			}
 		}
-		webcam = Webcam.getWebcams().get(1);
+		webcam = Webcam.getWebcams().get(0);
 		content = new JPanel();
 		Dimension camDim = new Dimension(320, 180);
 		content.setPreferredSize(new Dimension(WIDTH, HEIGHT));
