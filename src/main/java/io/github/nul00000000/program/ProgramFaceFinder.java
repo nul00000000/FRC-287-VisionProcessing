@@ -18,7 +18,7 @@ public class ProgramFaceFinder implements Program {
 	private CascadeClassifier faceCascade2 = new CascadeClassifier();
 	
 	public ProgramFaceFinder() {
-		init();
+		init();//edit
 	}
 	
 	public void init() {
