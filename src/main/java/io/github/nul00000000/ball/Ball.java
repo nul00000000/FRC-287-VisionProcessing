@@ -24,6 +24,10 @@ public class Ball {
 		return distanceSquared(other) < (radius + other.radius) * (radius + other.radius);
 	}
 	
+	public boolean overlaps(Point other, double otherRadius) {
+		return distanceSquared(other) < (radius + otherRadius) * (radius + otherRadius);
+	}
+	
 	public double getRadius() {
 		return radius;
 	}
