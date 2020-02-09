@@ -10,7 +10,7 @@ public class ProgramDetectStraws implements Program {
 	}
 
 	public void init() {
-
+		
 	}
 
 	public Mat process(Mat frame) {
