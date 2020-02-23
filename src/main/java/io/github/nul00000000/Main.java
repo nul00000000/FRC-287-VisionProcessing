@@ -18,15 +18,17 @@ import io.github.nul00000000.program.Program;
 import io.github.nul00000000.program.ProgramBadFaceTrack;
 import io.github.nul00000000.program.ProgramFaceFinder;
 import io.github.nul00000000.program.ProgramInfiniteRecharge;
+import io.github.nul00000000.program.ProgramTurnToFace;
 
 public class Main {
 	
-	public static final int WIDTH = 1280, HEIGHT = 360;
+	public static final int WIDTH = 1280, HEIGHT = 720;
 	
 	public static final byte INFINITE_RECHARGE = 0;
 	public static final byte TURTLE_STRAW_SCREAM = 1;
 	public static final byte FACE_FINDER = 2;
 	public static final byte BAD_FACE_TRACK = 3;
+	public static final byte TURN_TO_FACE = 4;
 	
 	private byte programID;
 	private Program program;
@@ -35,13 +37,13 @@ public class Main {
 	private JFrame window;
 	private JPanel content;
 	private Graphics g;
-		
+			
 	public Main(String[] args) {
 		System.load("C:/OpenCV-4.2.0/opencv/build/java/x64/opencv_java420.dll");
 //		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		if(args.length < 1) {
 			System.out.println("No program selected, defaulting to 0 (INFINITE_RECHARGE)");
-			programID = INFINITE_RECHARGE;
+			programID = TURN_TO_FACE;
 		} else if(args[0].equals("list")) {
 			this.printList(System.out);
 		} else {
@@ -52,7 +54,7 @@ public class Main {
 				this.printList(System.err);
 			}
 		}
-		webcam = Webcam.getWebcams().get(1);
+		webcam = Webcam.getWebcams().get(0);
 		content = new JPanel();
 		Dimension camDim = new Dimension(320, 180);
 		content.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -78,8 +80,11 @@ public class Main {
 			program = new ProgramFaceFinder();
 			break;
 		case BAD_FACE_TRACK:
-			frame.put(0, 0, ((DataBufferByte) webcam.getImage().getRaster().getDataBuffer()).getData());
+//			frame.put(0, 0, ((DataBufferByte) webcam.getImage().getRaster().getDataBuffer()).getData());
 			program = new ProgramBadFaceTrack(frame);
+			break;
+		case TURN_TO_FACE:
+			program = new ProgramTurnToFace();
 			break;
 		default:
 			break;
@@ -90,9 +95,9 @@ public class Main {
 				frame.put(0, 0, ((DataBufferByte) webcam.getImage().getRaster().getDataBuffer()).getData());
 				
 				dest = program.process(frame);
-				
-				g.drawImage(HighGui.toBufferedImage(frame), WIDTH / 2, 0, -WIDTH / 2, HEIGHT, null);
-				g.drawImage(HighGui.toBufferedImage(dest), WIDTH, 0, -WIDTH / 2, HEIGHT, null);
+//				Imgproc.cvtColor(frame, frame, Imgproc.BGR);
+								
+				g.drawImage(HighGui.toBufferedImage(frame), 0, 0, WIDTH, HEIGHT, null);
 			}
 		} finally {
 			webcam.close();
