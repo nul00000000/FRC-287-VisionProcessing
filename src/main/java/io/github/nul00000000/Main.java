@@ -39,11 +39,11 @@ public class Main {
 	private Graphics g;
 			
 	public Main(String[] args) {
-		System.load("C:/OpenCV-4.2.0/opencv/build/java/x64/opencv_java420.dll");
+		System.load("C:/Users/Admin/Downloads/opencv/build/java/x64/opencv_java451.dll");
 //		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		if(args.length < 1) {
 			System.out.println("No program selected, defaulting to 0 (INFINITE_RECHARGE)");
-			programID = TURN_TO_FACE;
+			programID = FACE_FINDER;
 		} else if(args[0].equals("list")) {
 			this.printList(System.out);
 		} else {
@@ -56,7 +56,7 @@ public class Main {
 		}
 		webcam = Webcam.getWebcams().get(0);
 		content = new JPanel();
-		Dimension camDim = new Dimension(320, 180);
+		Dimension camDim = new Dimension(1280 / 2, 720 / 2);
 		content.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		webcam.setCustomViewSizes(camDim);
 		webcam.setViewSize(camDim);
@@ -97,7 +97,7 @@ public class Main {
 				dest = program.process(frame);
 //				Imgproc.cvtColor(frame, frame, Imgproc.BGR);
 								
-				g.drawImage(HighGui.toBufferedImage(frame), 0, 0, WIDTH, HEIGHT, null);
+				g.drawImage(HighGui.toBufferedImage(dest), 0, 0, WIDTH, HEIGHT, null);
 			}
 		} finally {
 			webcam.close();

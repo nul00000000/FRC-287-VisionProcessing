@@ -17,16 +17,19 @@ public class ProgramFaceFinder implements Program {
 	private CascadeClassifier faceCascade = new CascadeClassifier();
 	private CascadeClassifier faceCascade2 = new CascadeClassifier();
 	
+	private Rect last = null;
+	private int ticksSinceUpdate = 10000;
+	
 	public ProgramFaceFinder() {
 		init();//edit
 	}
 	
 	public void init() {
-		if(!faceCascade.load("C:/OpenCV-4.2.0/opencv/build/etc/lbpcascades/lbpcascade_frontalface.xml")) {
+		if(!faceCascade.load("C:/Users/Admin/Downloads/opencv/build/etc/lbpcascades/lbpcascade_frontalface.xml")) {
 			System.err.println("LBP Face Cascade could not load");
 			System.exit(0);
 		}
-		if(!faceCascade2.load("C:/OpenCV-4.2.0/opencv/build/etc/haarcascades/haarcascade_frontalface_alt.xml")) {
+		if(!faceCascade2.load("C:/Users/Admin/Downloads/opencv/build/etc/haarcascades/haarcascade_frontalface_alt.xml")) {
 			System.err.println("Haar Face Cascade could not load");
 			System.exit(0);
 		}
@@ -53,22 +56,31 @@ public class ProgramFaceFinder implements Program {
 //			}
 //		}
 		List<Rect> lof = faces2.toList();
-		for(Rect face : lof) {
-			if(face.width > largest.width) {
-				largest.width = face.width;
-				largest.x = face.x;
-				largest.y = face.y;
+		if(lof.size() > 0) {
+			for(Rect face : lof) {
+				if(face.width > largest.width) {
+					largest.width = face.width;
+					largest.x = face.x;
+					largest.y = face.y;
+				}
+				if(face.height > largest.height) {
+					largest.height = face.height;
+					largest.x = face.x;
+					largest.y = face.y;
+				}
 			}
-			if(face.height > largest.height) {
-				largest.height = face.height;
-				largest.x = face.x;
-				largest.y = face.y;
+			if(ticksSinceUpdate > 100 || Math.abs(largest.area() - last.area()) / last.area() < 0.2) {
+				last = largest;
 			}
 		}
-		Imgproc.rectangle(frame, largest, new Scalar(255, 0, 255));
-		
-		Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2RGB);
-		return largest.area() > 0 ? frame.submat(largest) : frame;
+		if(last != null && last.area() > 0) {
+			Imgproc.rectangle(frame, last, new Scalar(255, 0, 255));
+			Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2RGB);
+			return frame.submat(last);
+		} else {
+			Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2RGB);
+			return frame;
+		}
 	}
 
 }
