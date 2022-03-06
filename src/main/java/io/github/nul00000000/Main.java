@@ -16,6 +16,7 @@ import com.github.sarxos.webcam.Webcam;
 
 import io.github.nul00000000.program.Program;
 import io.github.nul00000000.program.ProgramBadFaceTrack;
+import io.github.nul00000000.program.ProgramDetectBall;
 import io.github.nul00000000.program.ProgramFaceFinder;
 import io.github.nul00000000.program.ProgramInfiniteRecharge;
 import io.github.nul00000000.program.ProgramTurnToFace;
@@ -29,6 +30,7 @@ public class Main {
 	public static final byte FACE_FINDER = 2;
 	public static final byte BAD_FACE_TRACK = 3;
 	public static final byte TURN_TO_FACE = 4;
+	public static final byte DETECT_BALL = 5;
 	
 	private byte programID;
 	private Program program;
@@ -43,7 +45,7 @@ public class Main {
 //		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		if(args.length < 1) {
 			System.out.println("No program selected, defaulting to 0 (INFINITE_RECHARGE)");
-			programID = FACE_FINDER;
+			programID = DETECT_BALL;
 		} else if(args[0].equals("list")) {
 			this.printList(System.out);
 		} else {
@@ -85,6 +87,9 @@ public class Main {
 			break;
 		case TURN_TO_FACE:
 			program = new ProgramTurnToFace();
+			break;
+		case DETECT_BALL:
+			program = new ProgramDetectBall();
 			break;
 		default:
 			break;
